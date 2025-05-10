@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /root/go-deploy
+            cd /root/go-deploy-vps
             docker stop go-app || true && docker rm go-app || true
             docker build -t go-app .
             docker run -d --name go-app -p 8000:8000 go-app

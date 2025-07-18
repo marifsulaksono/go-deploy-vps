@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("Error loading .env file")
-	}
+	_ = godotenv.Load()
 
 	r := gin.Default()
 
@@ -38,5 +35,6 @@ func main() {
 	if port == "" {
 		port = "3000" // Default port
 	}
+	fmt.Println("Server is running on port " + port)
 	r.Run(":" + port)
 }

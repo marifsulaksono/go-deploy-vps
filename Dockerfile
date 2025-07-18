@@ -1,21 +1,23 @@
-# Gunakan official Golang image sebagai base
-FROM golang:1.24-alpine
+# Stage 1: Build
+FROM golang:1.24-alpine AS builder
 
-# Set environment agar build Go lebih ringan
-ENV CGO_ENABLED=0 GOOS=linux
-
-# Set working directory di dalam container
 WORKDIR /app
 
-# Salin dependency files terlebih dahulu agar bisa cache build
-COPY go.mod go.sum ./
-RUN go mod tidy
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
 
-# Salin semua source code ke dalam container
-COPY . .
-
-# Build aplikasi Go
+COPY . ./
 RUN go build -o main .
 
-# Jalankan aplikasi Go
+# Stage 2: Run
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/main .
+
+# only for documentation
+EXPOSE 8000
+
 CMD ["./main"]

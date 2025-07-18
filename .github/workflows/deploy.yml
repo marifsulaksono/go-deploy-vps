@@ -24,4 +24,4 @@ jobs:
             git pull origin main
             docker build -t mentor-app .
             docker rm -f mentor || true
-            docker run -d -p 8000:8000 --env-file .env --name mentor mentor-app
+            docker run -d -p 8000:8000 --env-file /home/student/mentor/.env --name mentor mentor-app

@@ -1,10 +1,19 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("Error loading .env file")
+	}
+
 	r := gin.Default()
 
 	r.GET("/v1/ping", func(c *gin.Context) {
@@ -25,5 +34,9 @@ func main() {
 		})
 	})
 
-	r.Run(":8000")
+	port := os.Getenv("APP_PORT")
+	if port == "" {
+		port = "3000" // Default port
+	}
+	r.Run(":" + port)
 }

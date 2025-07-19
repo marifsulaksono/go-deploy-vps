@@ -27,7 +27,7 @@ func main() {
 
 	r.GET("/v1/about", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Ini adalah hands-on deployment VPS dibimbing",
+			"message": "Ini adalah hands-on deployment VPS pada bootcamp dibimbing",
 		})
 	})
 

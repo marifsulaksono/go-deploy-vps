@@ -10,14 +10,10 @@ services:
       - .env
     ports:
       - "8000:8000"
-    links:
-      - shared-mysql:mysql # alias untuk kemudahan koneksi
-    external_links:
-      - shared-mysql
     networks:
-      - default
+      - shared-network
+    depends_on: []  # Redis dihapus, jadi kosongkan atau hapus baris ini
 
 networks:
-  default:
-    name: shared-network
+  shared-network:
     external: true

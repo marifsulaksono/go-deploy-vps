@@ -3,7 +3,7 @@ name: Mentor Deploy to VPS
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -22,6 +22,10 @@ jobs:
           script: |
             cd /home/student/mentor
             git pull origin main
-            docker build -t mentor-app .
-            docker rm -f mentor || true
-            docker run -d -p 8000:8000 --env-file /home/student/mentor/.env --name mentor mentor-app
+
+            # optional: stop/remove previous container if needed
+            docker compose --env-file .env down || true
+
+            # build and up with compose (assuming Dockerfile & docker-compose.yml ada)
+            docker compose --env-file .env up -d --build
+

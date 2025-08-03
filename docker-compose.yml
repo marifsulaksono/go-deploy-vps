@@ -10,29 +10,14 @@ services:
       - .env
     ports:
       - "8000:8000"
-    depends_on:
-      - mysql
-      - redis
+    links:
+      - shared-mysql:mysql # alias untuk kemudahan koneksi
+    external_links:
+      - shared-mysql
+    networks:
+      - default
 
-  mysql:
-    image: mysql:8.0
-    container_name: shared-mysql
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASS}
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-  redis:
-    image: redis:7
-    container_name: shared-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-
-volumes:
-  mysql_data:
-  redis_data:
+networks:
+  default:
+    name: shared-network
+    external: true

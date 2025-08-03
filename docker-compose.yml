@@ -12,7 +12,25 @@ services:
       - "8000:8000"
     networks:
       - shared-network
-    depends_on: []  # Redis dihapus, jadi kosongkan atau hapus baris ini
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: shared-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - shared-network
+
+volumes:
+  mysql_data:
 
 networks:
   shared-network:

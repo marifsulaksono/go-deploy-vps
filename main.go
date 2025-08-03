@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"go-deploy-vps/config"
+	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,16 @@ import (
 
 func main() {
 	_ = godotenv.Load()
+
+	// Initialize the database connection
+	db := config.InitDatabase()
+	defer func() {
+		sqlDB, err := db.DB()
+		if err != nil {
+			log.Println("Error getting database instance:", err)
+		}
+		sqlDB.Close()
+	}()
 
 	r := gin.Default()
 
@@ -35,6 +46,6 @@ func main() {
 	if port == "" {
 		port = "3000" // Default port
 	}
-	fmt.Println("Server is running on port " + port)
+	log.Println("Server is running on port " + port)
 	r.Run(":" + port)
 }

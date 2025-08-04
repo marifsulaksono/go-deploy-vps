@@ -9,11 +9,5 @@ services:
     env_file:
       - .env
     ports:
-      - "8000:8000"
-    networks:
-      - shared-network
-    depends_on: []
-
-networks:
-  shared-network:
-    external: true
+      - "${APP_PORT}:8000"
+    restart: unless-stopped

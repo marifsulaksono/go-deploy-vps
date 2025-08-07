@@ -17,7 +17,7 @@ func main() {
 	defer func() {
 		sqlDB, err := db.DB()
 		if err != nil {
-			log.Println("Error getting database instance:", err)
+			log.Println("Error finding database instance:", err)
 		}
 		sqlDB.Close()
 	}()

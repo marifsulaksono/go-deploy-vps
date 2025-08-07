@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/student/mentor
+            cd /home/student/mentor/go-deploy-vps
             git pull origin main
 
             # optional: stop/remove previous container if needed

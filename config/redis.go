@@ -13,11 +13,13 @@ import (
 func ConnectRedis(ctx context.Context) *redis.Client {
 	// Ambil host & port dari env (kalau kosong, pakai default)
 	host := os.Getenv("REDIS_HOST")
+	fmt.Println("=======> REDIS_HOST:", host)
 	if host == "" {
 		host = "127.0.0.1"
 	}
 
 	port := os.Getenv("REDIS_PORT")
+	fmt.Println("=======> REDIS_PORT:", port)
 	if port == "" {
 		port = "6379"
 	}

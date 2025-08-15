@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"go-deploy-vps/config"
 	"log"
 	"os"
@@ -20,6 +21,15 @@ func main() {
 			log.Println("Error finding database instance:", err)
 		}
 		sqlDB.Close()
+	}()
+
+	// Initialize Redis connection
+	ctx := context.Background()
+	redisClient := config.ConnectRedis(ctx)
+	defer func() {
+		if err := redisClient.Close(); err != nil {
+			log.Println("Error closing Redis connection:", err)
+		}
 	}()
 
 	r := gin.Default()

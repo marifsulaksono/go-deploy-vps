@@ -33,9 +33,9 @@ func ConnectRedis(ctx context.Context) *redis.Client {
 
 	pong, err := rdb.Ping(ctx).Result()
 	if err != nil {
-		log.Fatalf("Gagal konek ke Redis di %s: %v", addr, err)
+		log.Fatalf("Failed to connect to Redis at: %v", err)
 	}
 
-	fmt.Printf("Berhasil konek ke Redis di %s → %s\n", addr, pong)
+	fmt.Printf("Successfully connected to Redis at %s → %s\n", addr, pong)
 	return rdb
 }
